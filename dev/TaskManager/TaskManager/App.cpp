@@ -40,7 +40,7 @@ void App::HandleChoice(int choice)
 	case 1:
 		std::cout << "\nEnter a task title: ";
 		std::getline(std::cin, taskTitle);
-		manager.AddTask(title);
+		manager.AddTask(taskTitle);
 		break;
 	case 2:
 		manager.ViewTasks();
