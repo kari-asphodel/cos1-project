@@ -11,7 +11,8 @@ public:
 };
 void Problem1()
 {
-    Player.Print();
+    Player player;
+    player.Print();
     std::cin.get();
 }
 
@@ -19,7 +20,7 @@ void Problem2()
 {
     std::vector<int> scores;
 
-    scores[0] = 100;
+    scores.push_back(100);
 
     std::cout << scores[0];
     std::cin.get();
@@ -27,9 +28,9 @@ void Problem2()
 
 void Problem3()
 {
-    int* number;
+    int number = 5;
 
-    *number = 5;
+    int* value = &number;
 
     cout << *number;
     std::cin.get();
@@ -38,10 +39,11 @@ void Problem3()
 void Problem4()
 {
     int* data = new int;
-
+    delete data;
     data = new int;
 
     delete data;
+    data = nullptr;
     std::cin.get();
 }
 
@@ -51,9 +53,17 @@ private:
     int* items;
 
 public:
-    Inventory()
+    Inventory(int count = 0)
     {
-        items = new int(10);
+        items = new int(count);
+    }
+    Inventory(const Inventory& other)
+    {
+        items = new int(*other.items);
+    }
+    ~Inventory()
+    {
+        delete items;
     }
 };
 void Problem5()
@@ -68,11 +78,24 @@ private:
     int* items;
 
 public:
-    GhostInventory()
+    GhostInventory(int amount = 0)
     {
-        items = new int(5);
+        items = new int(amount);
     }
-
+    GhostInventory(const GhostInventory& other)
+    {
+        ites = new int(*other.items);
+    }
+    GhostInventory& operator=(const GhostInventory& other)
+    {
+        if (this != &other)
+        {
+            int* newItems = new int(*other.items);
+            delete items;
+            items = newItems;
+        }
+        return *this;
+    }
     ~GhostInventory()
     {
         delete items;
@@ -96,6 +119,20 @@ public:
     {
         health = new int(100);
     }
+    MonsterProblem7(const MonsterProblem7& other)
+    {
+        health = new int(*other.health);
+    }
+    MonsterProblem7& operator=(const MonsterProblem7& other)
+    {
+        if (this != &other)
+        {
+            int* newHealth = new int(*other.health);
+            delete health;
+            health = newHealth;
+        }
+        return *this;
+    }
 
     ~MonsterProblem7()
     {
@@ -103,20 +140,24 @@ public:
     }
 };
 
-int* Problem8()
+int Problem8()
 {
     int number = 42;
 
-    return &number;
+    return number;
 }
 
 void Problem9()
 {
     Player* player = new Player();
 
+    if (player != nullptr)
+    {
+        player->Print();
+    }
     delete player;
+    player = nullptr;
 
-    player->Print();
     std::cin.get();
 }
 
@@ -129,6 +170,16 @@ public:
     MonsterInventory()
     {
         data = new int(5);
+    }
+    MonsterInventory& operator=(const MonsterInventory& other)
+    {
+        if (this != &other)
+        {
+            int* newItems = new int(*other.data);
+            delete data;
+            data = newItems;
+        }
+        return *this;
     }
 
     ~MonsterInventory()
