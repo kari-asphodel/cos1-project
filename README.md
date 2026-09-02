@@ -23,9 +23,13 @@ Each week I will summarize my milestone activity and progress by writing a stand
 <br>
 
 ### Week 1
-
-Replace this paragraph with your stand up for this week. Use the prompts above to summarize your most recent milestone activity and work.
-
+- ⚙️ **Overview** – What did you work on this past week?
+    
+- 🌵 **Challenges** – What obstacles did you encounter, and how are you addressing them?
+    
+- 🏆 **Accomplishments** – What is something you learned, improved, or "leveled up" on this week?
+    
+- 🔮 **Next Steps** – What do you plan to prioritize before your next milestone?
 ### Week 2
 
 My next stand up will go here...
