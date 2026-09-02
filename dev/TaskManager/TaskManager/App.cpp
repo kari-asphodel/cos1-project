@@ -53,7 +53,7 @@ void App::HandleChoice(int choice)
 		std::cout << "\nThe crypt has been sealed. Goodbye.\n";
 		break;
 	default:
-		std::cout << "\nThat option does not exist in this crpty.\n";
+		std::cout << "\nThat option does not exist in this crypt.\n";
 		break;
 	}
 }
