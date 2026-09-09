@@ -46,7 +46,7 @@ void TaskManager::ViewCompletedTasks() const
 
 void TaskManager::CompleteTask(int index)
 {
-	if (index = > 0 && index < activeTasks.size())
+	if (index >= 0 && index < activeTasks.size())
 	{
 		activeTasks[index].CompleteTask();
 		completedTasks.push_back(activeTasks[index]);
