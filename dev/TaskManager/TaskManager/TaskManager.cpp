@@ -63,3 +63,11 @@ int TaskManager::GetActiveTaskCount() const
 {
 	return activeTasks.size();
 }
+
+void TaskManager::DisplaySummary() const
+{
+	std::cout << "\n==== CRYPT SUMMARY ====\n";
+	std::cout << "Active Tasks: " << activeTasks.size() << "\n";
+	std::cout << "Completed Tasks: " << completedTasks.size() << "\n";
+	std::cout << "Total Tasks Created: " << activeTasks.size()+completedTasks.size() << "\n";
+}

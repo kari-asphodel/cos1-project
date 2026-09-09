@@ -60,6 +60,7 @@ void App::HandleChoice(int choice)
 		manager.ViewCompletedTasks();
 		break;
 	case 5:
+		manager.DisplaySummary();
 		break;
 	case 6:
 		isRunning = false;
