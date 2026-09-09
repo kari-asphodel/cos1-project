@@ -15,6 +15,8 @@ public:
 
 	void CompleteTask(int index);
 
+	void DisplaySummary() const;
+
 	int GetActiveTaskCount() const;
 };
 
