@@ -4,7 +4,7 @@ void Case1()
 {
     int health = 100;
 
-    if (health = 0)
+    if (health == 0)
     {
         std::cout << "You have died.\n";
     }
@@ -21,6 +21,7 @@ void Case2()
         if (choice == 1)
         {
             std::cout << "Goodbye!\n";
+            break;
         }
     }
 }
@@ -28,14 +29,14 @@ void Case3()
 {
     std::vector<int> scores = { 10, 20, 30 };
 
-    for (int i = 0; i <= scores.size(); i++)
+    for (int i = 0; i < scores.size(); i++)
     {
         std::cout << scores[i] << "\n";
     }
 }
 void Case4()
 {
-    int gold;
+    int gold = 5635;
 
     std::cout << gold << "\n";
 
@@ -48,7 +49,10 @@ void Case5()
 
     inventory.clear();
 
-    std::cout << inventory[0];
+    if (!inventory.empty())
+    {
+        std::cout << inventory[0];
+    }
 }
 void Case6()
 {
@@ -57,6 +61,7 @@ void Case6()
     while (health < 100)
     {
         std::cout << "Healing...\n";
+        health += 10;
     }
 }
 void Case7()
@@ -64,13 +69,17 @@ void Case7()
     int dragons = 5;
 
     dragons -= 10;
-
+    if (dragons < 0)
+    {
+        dragons = 0;
+    }
     std::cout << dragons;
 }
 void Case8()
 {
     std::cout << "1. Play\n";
     std::cout << "2. Exit\n";
+    std::cout << "7. Secret Shop\n";
 
     if (choice == 7)
     {
@@ -82,13 +91,20 @@ void Case9()
     Potion* potion = new Potion();
 
     potion->drink();
+    delete potion;
+    potion = nullptr;
 }
 void Case10()
 {
-    int choice;
-
-    std::cin >> choice;
-
+    try {
+        std::string input;
+        std::getline(std::cin, input);
+        int choice = std::stoi(input);
+    }
+    catch (...)
+    {
+        std::cout << "Invalid choice";
+    }
     std::cout << "You chose: " << choice;
 }
 int main()
