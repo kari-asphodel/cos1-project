@@ -11,7 +11,7 @@ void Round1()
 
     std::cout << total;
     // A. 3
-    // B. 6
+    // B. 6 // THIS ONE
     // C. 9
     // D. The Loop Has Betrayed Us
 }
@@ -21,7 +21,7 @@ void Round2()
     {
         std::cout << i << " ";
     }
-    // A. 0 1 2
+    // A. 0 1 2 // THIS ONE
     // B. 1 2 3
     // C. 0 1 2 3
     // D. Infinite void
@@ -38,7 +38,7 @@ void Round3()
     {
         std::cout << "Alive";
     }
-    // A. Dead
+    // A. Dead // THIS ONE
     // B. Alive
     // C. Nothing
     // D. Health files a complaint
@@ -49,7 +49,7 @@ void Round4()
 
     std::cout << items[1];
     // A. Sword
-    // B. Shield
+    // B. Shield // THIS ONE
     // C. Potion
     // D. The vector screams
 }
@@ -65,7 +65,7 @@ void Round5()
     {
         std::cout << "Door opens";
     }
-    // A. Door locked
+    // A. Door locked // THIS ONE
     // B. Door opens
     // C. false
     // D. The key was never real
@@ -79,7 +79,7 @@ void Round6()
     std::cout << Round6DoubleNumber(4);
     // A. 4
     // B. 6
-    // C. 8
+    // C. 8 // THIS ONE
     // D. The function refuses
 }
 void Round7()
@@ -89,7 +89,7 @@ void Round7()
     std::cout << "Hello, " << name;
     // A. Hello
     // B. Goblin
-    // C. Hello, Goblin
+    // C. Hello, Goblin // THIS ONE
     // D. Hello, name
 }
 void Round8()
@@ -99,7 +99,7 @@ void Round8()
     potions--;
 
     std::cout << potions;
-    // A. 1
+    // A. 1 // THIS ONE
     // B. 2
     // C. 3
     // D. Potion evaporates
@@ -121,7 +121,7 @@ void Round9()
         std::cout << "Exit";
     }
     // A. Add
-    // B. View
+    // B. View // THIS ONE
     // C. Exit
     // D. All of them
 }
@@ -131,7 +131,7 @@ void Round10()
 
     std::cout << numbers.size();
     // A. 3
-    // B. 4
+    // B. 4 // THIS ONE
     // C. 16
     // D. Lost numbers detected
 }
@@ -143,7 +143,7 @@ void BonusRound()
     // A. Sword
     // B. Shield
     // C. Potion
-    // D. Out-of-bounds problem
+    // D. Out-of-bounds problem // THIS ONE
 }
 int main()
 {
