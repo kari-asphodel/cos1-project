@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GuessTheOutput/GuessTheOutput.vcxproj" Id="e5465189-bd7c-45c3-8d28-f73c41cd2bc6" />
+</Solution>

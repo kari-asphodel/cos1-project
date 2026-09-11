@@ -32,7 +32,13 @@ Each week I will summarize my milestone activity and progress by writing a stand
 - 🔮 **Next Steps** – What do you plan to prioritize before your next milestone?
 ### Week 2
 
-My next stand up will go here...
+- ⚙️ **Overview** – What did you work on this past week?
+    
+- 🌵 **Challenges** – What obstacles did you encounter, and how are you addressing them?
+    
+- 🏆 **Accomplishments** – What is something you learned, improved, or "leveled up" on this week?
+    
+- 🔮 **Next Steps** – What do you plan to prioritize before Week 3?
 
 ### Week 3
 

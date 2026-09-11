@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="AI_Pair_Programming_Activity/AI_Pair_Programming_Activity.vcxproj" Id="20416301-201f-4158-a3fb-933625e4c8c0" />
+</Solution>

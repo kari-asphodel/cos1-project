@@ -10,14 +10,11 @@ App::App()
 void App::Run()
 {
 	std::cout << "Welcome to the Crypt Keeper Productivity Program.\n";
-	std::cout << "Let us organize the chaos before it organizes us.";
+	std::cout << "Today, the crypt learns to survive user chaos.";
 	while (isRunning)
 	{
 		DisplayMenu();
-		std::string input;
-		std::getline(std::cin, input);
-		int choice = std::stoi(input);
-
+		int choice = GetValidatedInputInRange(1, 6);
 		HandleChoice(choice);
 	}
 }
@@ -26,15 +23,18 @@ void App::DisplayMenu() const
 {
 	std::cout << "\n==== CRYPT KEEPER ====\n";
 	std::cout << "1. Add Task\n";
-	std::cout << "2. View Tasks\n";
+	std::cout << "2. View Active Tasks\n";
 	std::cout << "3. Complete Task\n";
-	std::cout << "4. Exit\n";
-	std::cout << "Choose an option between 1 and 4: ";
+	std::cout << "4. View Completed Tasks\n";
+	std::cout << "5. View Progress Summary\n";
+	std::cout << "6. Exit\n";
+	std::cout << "Choose an option between 1 and 6: ";
 }
 
 void App::HandleChoice(int choice)
 {
 	std::string taskTitle; // for case 1
+	int taskNumber; // for case 3
 	switch (choice)
 	{
 	case 1:
@@ -43,17 +43,55 @@ void App::HandleChoice(int choice)
 		manager.AddTask(taskTitle);
 		break;
 	case 2:
-		manager.ViewTasks();
+		manager.ViewActiveTasks();
 		break;
 	case 3:
-		std::cout << "\nComplete task is still sealed inside a future issue.\n";
+		if (manager.GetActiveTaskCount() == 0)
+		{
+			std::cout << "\nThere are no active tasks to complete.\n";
+			return;
+		}
+		manager.ViewActiveTasks();
+		std::cout << "\nEnter the task number to complete: ";
+		taskNumber = GetValidatedInputInRange(1, manager.GetActiveTaskCount());
+		manager.CompleteTask(taskNumber - 1);
 		break;
 	case 4:
+		manager.ViewCompletedTasks();
+		break;
+	case 5:
+		manager.DisplaySummary();
+		break;
+	case 6:
 		isRunning = false;
 		std::cout << "\nThe crypt has been sealed. Goodbye.\n";
 		break;
 	default:
 		std::cout << "\nThat option does not exist in this crypt.\n";
 		break;
+	}
+}
+
+int App::GetValidatedInputInRange(int min, int max)
+{
+	std::string input;
+	int number;
+
+	while (true)
+	{
+		std::getline(std::cin, input);
+		try // try the risky code
+		{
+			number = std::stoi(input);
+			if (number >= min && number <= max)
+			{
+				return number;
+			}
+			std::cout << "Invalid option. Please enter a number between " << min << " and " << max << ": ";
+		}
+		catch (...) //... is a catch all
+		{
+			std::cout << "Invalid option. Please enter a number between " << min << " and " << max << ": ";
+		}
 	}
 }

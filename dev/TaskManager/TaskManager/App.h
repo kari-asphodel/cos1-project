@@ -7,6 +7,7 @@ private:
 	bool isRunning;
 
 	void DisplayMenu() const;
+	int GetValidatedInputInRange(int min, int max);
 	void HandleChoice(int choice);
 public:
 	App();
