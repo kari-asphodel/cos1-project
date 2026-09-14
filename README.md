@@ -42,7 +42,15 @@ Each week I will summarize my milestone activity and progress by writing a stand
 
 ### Week 3
 
-Stay tuned, this stand up is coming soon...
+- ⚙️ **Overview** – What did you work on this past week?
+    
+- 🛠️ **Improvements** – What changes, refinements, or new features did you make?
+    
+- 🌵 **Challenges** – What obstacles did you encounter, and how are you addressing them?
+    
+- 💬 **Feedback** – What feedback have you received, and how will it influence your next steps?
+    
+- 🔮 **Next Steps** – What is your primary goal for Week 4?
 
 ### Week 4
 
