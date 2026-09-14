@@ -38,7 +38,7 @@ void App::HandleChoice(int choice)
 	std::string taskTitle; // for case 1
 	std::string category;//for case 1
 	Priority priority; // for case 1
-	Priority filterPriority // for case 7
+	Priority filterPriority; // for case 7
 
 	int taskNumber; // for case 3
 	switch (choice)
