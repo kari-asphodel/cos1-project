@@ -13,6 +13,6 @@ int main()
 }
 
 // A. 25
-// B. 50  
+// B. 50  - THIS ONE
 // C. Memory Address
 // D. Does not compile

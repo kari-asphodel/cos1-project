@@ -15,6 +15,6 @@ int main()
 }
 
 // A. 10
-// B. 99 
+// B. 99 - THIS ONE
 // C. The address of number
 // D. Does not compile

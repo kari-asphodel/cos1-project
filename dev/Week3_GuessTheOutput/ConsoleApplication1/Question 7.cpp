@@ -23,4 +23,4 @@ int main()
 // A. 0
 // B. Garbage value
 // C. 1
-// D. Does not compile 
+// D. Does not compile - THIS ONE

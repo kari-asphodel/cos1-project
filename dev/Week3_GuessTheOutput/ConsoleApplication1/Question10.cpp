@@ -31,6 +31,6 @@ int main()
 }
 
 // A. 20 25
-// B. 25 25
+// B. 25 25 - THIS ONE
 // C. 20 20
 // D. Does not compile

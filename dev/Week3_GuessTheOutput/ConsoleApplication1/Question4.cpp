@@ -24,7 +24,7 @@ int main()
     return 0;
 }
 
-// A. 100 50 
+// A. 100 50 - THIS ONE
 // B. 50 50
 // C. 100 100
 // D. Does not compile
