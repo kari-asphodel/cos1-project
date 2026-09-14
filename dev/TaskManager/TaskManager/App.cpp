@@ -34,13 +34,19 @@ void App::DisplayMenu() const
 void App::HandleChoice(int choice)
 {
 	std::string taskTitle; // for case 1
+	std::string category;//for case 1
+	Priority priority; // for case 1
+
 	int taskNumber; // for case 3
 	switch (choice)
 	{
 	case 1:
 		std::cout << "\nEnter a task title: ";
 		std::getline(std::cin, taskTitle);
-		manager.AddTask(taskTitle);
+		priority = GetPriorityFromUser();
+		std::cout << "Enter the task category, such as Rituals, Wards, Archives, or Crypt Care: ";
+		std::getline(std::cin, category);
+		manager.AddTask(taskTitle, priority, category);
 		break;
 	case 2:
 		manager.ViewActiveTasks();
@@ -94,4 +100,23 @@ int App::GetValidatedInputInRange(int min, int max)
 			std::cout << "Invalid option. Please enter a number between " << min << " and " << max << ": ";
 		}
 	}
+}
+
+Priority App::GetPriorityFromUser() 
+{
+	std::cout << "\nChoose task priority:\n";
+	std::cout << "1. Low\n";
+	std::cout << "2. Medium\n";
+	std::cout << "3. High\n";
+	std::cout << "Choose an option between 1 and 3: ";
+	int choice = GetValidatedInputInRange(1, 3);
+	if (choice == 1)
+	{
+		return Priority::Low;
+	}
+	else if (choice == 2)
+	{
+		return Priority::Medium;
+	}
+	return Priority::High;
 }

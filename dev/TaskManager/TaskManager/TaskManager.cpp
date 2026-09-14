@@ -1,47 +1,21 @@
 #include "TaskManager.h"
 #include <iostream>
 
-void TaskManager::AddTask(std::string title)
+void TaskManager::AddTask(std::string title, Priority priority, std::string category)
 {
-	activeTasks.push_back(Task(title));
+	activeTasks.push_back(Task(title, priority, category));
 
 	std::cout << "\nTask added to the crypt successfully.\n";
 }
 
 void TaskManager::ViewActiveTasks() const
 {
-	std::cout << "\n==== ACTIVE TASKS ====\n";
-
-	if (activeTasks.empty())
-	{
-		std::cout << "\nThe crypt is empty. No tasks haunt you... yet.\n";
-		return;
-	}
-
-	for (int i = 0; i < activeTasks.size(); i++)
-	{
-		std::cout << i + 1 << ". "
-				  << activeTasks[i].GetTitle()
-				  << "\n";
-	}
+	DisplayTaskList(activeTasks, "ACTIVE TASKS");
 }
 
 void TaskManager::ViewCompletedTasks() const
 {
-	std::cout << "\n==== COMPLETED TASKS ====\n";
-
-	if (completedTasks.empty())
-	{
-		std::cout << "\nNo completed tasks yet. The ghosts remain employed.\n";
-		return;
-	}
-
-	for (int i = 0; i < completedTasks.size(); i++)
-	{
-		std::cout << i + 1 << ". "
-			<< completedTasks[i].GetTitle()
-			<< "\n";
-	}
+	DisplayTaskList(completedTasks, "COMPLETED TASKS");
 }
 
 void TaskManager::CompleteTask(int index)
@@ -70,4 +44,26 @@ void TaskManager::DisplaySummary() const
 	std::cout << "Active Tasks: " << activeTasks.size() << "\n";
 	std::cout << "Completed Tasks: " << completedTasks.size() << "\n";
 	std::cout << "Total Tasks Created: " << activeTasks.size()+completedTasks.size() << "\n";
+}
+
+void TaskManager::DisplayTaskList(const std::vector<Task>& taskList, std::string heading)const
+{
+	std::cout << "\n==== " << heading << " ====\n";
+
+	if (taskList.empty())
+	{
+		std::cout << "\nNo tasks found. The crypt is empty.\n";
+		return;
+	}
+
+	for (int i = 0; i < taskList.size(); i++)
+	{
+		std::cout << i + 1 << ". "
+			<< taskList[i].GetTitle()
+			<< " | Priority: "
+			<< taskList[i].GetPriorityText()
+			<<" | Category: "
+			<< taskList[i].GetCategory()
+			<< "\n";
+	}
 }
