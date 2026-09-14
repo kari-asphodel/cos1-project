@@ -3,6 +3,7 @@
 int CalculateDamage(int attack, int defense)
 {
     int damage = attack - defense;
+    return damage;
 }
 
 int main()

@@ -17,7 +17,7 @@ int main()
     Player player;
     player.name = "Asphodel";
 
-    player.displayName();
+    player.DisplayName();
 
     return 0;
 }

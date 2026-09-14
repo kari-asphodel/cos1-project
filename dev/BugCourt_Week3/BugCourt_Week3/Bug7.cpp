@@ -17,6 +17,7 @@ public:
     Character(const Character& other)
     {
         name = other.name;
+        health = other.health;
     }
 
     void Display()

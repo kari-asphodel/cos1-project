@@ -4,7 +4,7 @@ int main()
 {
     int health = 50;
 
-    if (health = 0)
+    if (health == 0)
     {
         std::cout << "Game Over\n";
     }

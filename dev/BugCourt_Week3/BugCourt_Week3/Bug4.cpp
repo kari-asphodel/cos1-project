@@ -13,7 +13,7 @@ int main()
     Enemy monster;
 
     monster.name = "Grave Crawler";
-    monster.Health = 100;
+    monster.health = 100;
 
     std::cout << monster.health;
 
