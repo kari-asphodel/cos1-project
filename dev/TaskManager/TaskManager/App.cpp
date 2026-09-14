@@ -14,7 +14,7 @@ void App::Run()
 	while (isRunning)
 	{
 		DisplayMenu();
-		int choice = GetValidatedInputInRange(1, 6);
+		int choice = GetValidatedInputInRange(1, 8);
 		HandleChoice(choice);
 	}
 }
@@ -27,8 +27,10 @@ void App::DisplayMenu() const
 	std::cout << "3. Complete Task\n";
 	std::cout << "4. View Completed Tasks\n";
 	std::cout << "5. View Progress Summary\n";
-	std::cout << "6. Exit\n";
-	std::cout << "Choose an option between 1 and 6: ";
+	std::cout << "6. Sort by Priority\n";
+	std::cout << "7. Filter by Priority\n";
+	std::cout << "8. Exit\n";
+	std::cout << "Choose an option between 1 and 8: ";
 }
 
 void App::HandleChoice(int choice)
@@ -36,6 +38,7 @@ void App::HandleChoice(int choice)
 	std::string taskTitle; // for case 1
 	std::string category;//for case 1
 	Priority priority; // for case 1
+	Priority filterPriority // for case 7
 
 	int taskNumber; // for case 3
 	switch (choice)
@@ -69,6 +72,14 @@ void App::HandleChoice(int choice)
 		manager.DisplaySummary();
 		break;
 	case 6:
+		manager.SortActiveTasksByPriority();
+		break;
+	case 7:
+		std::cout << "\nChoose a priority to filter by.";
+		filterPriority = GetPriorityFromUser();
+		manager.ViewTasksByPriority(filterPriority);
+		break;
+	case 8:
 		isRunning = false;
 		std::cout << "\nThe crypt has been sealed. Goodbye.\n";
 		break;

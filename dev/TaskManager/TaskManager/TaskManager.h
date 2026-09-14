@@ -19,6 +19,7 @@ public:
 	void CompleteTask(int index);
 	void SortActiveTasksByPriority();
 
+
 	void DisplaySummary() const;
 
 	int GetActiveTaskCount() const;
