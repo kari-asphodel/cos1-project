@@ -10,7 +10,7 @@ private:
 	void WaitForEnter() const;
 	void DisplayMenu() const;
 	int GetValidatedInputInRange(int min, int max) const;
-	std::String GetRequiredText(const std::string& prompt) const;
+	std::string GetRequiredText(const std::string& prompt) const;
 	void HandleChoice(int choice);
 	Priority GetPriorityFromUser();
 
