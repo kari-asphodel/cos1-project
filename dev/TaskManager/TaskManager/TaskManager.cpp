@@ -3,6 +3,11 @@
 #include <algorithm>
 #include <cctype>
 #include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <sstream>
+#include <set>
+
 
 namespace
 {
@@ -108,4 +113,106 @@ bool TaskManager::HasActiveTasks() const { return !activeTasks.empty(); }
 int TaskManager::GetActiveTaskCount() const
 {
     return static_cast<int>(activeTasks.size());
+}
+
+bool TaskManager::SaveToTextFile(const std::string& fileName)const
+{
+    std::ofstream file(fileName, std::ios::trunc);
+    if (!file) {
+        ConsoleColor::Print("Could not open the text ledger for saving\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    file << "CRYPT_TEXT_V1 " << activeTasks.size() << ' ' << completedTasks.size() << "\n";
+    auto writeTask = [&file](const Task& task)
+        {
+            file << task.GetId() << ' ' << static_cast<int>(task.GetPriority()) << ' '
+                << (task.IsCompleted() ? 1 : 0) << ' '
+                << std::quoted(task.GetTitle()) << ' '
+                << std::quoted(task.GetCategory()) << '\n';
+        };
+    for (const Task& task : activeTasks) writeTask(task);
+    for (const Task& task : completedTasks) writeTask(task);
+    file.close();
+    if (!file)
+    {
+        ConsoleColor::Print("Text save did not finish. Check the file location.\n", ConoleColor::Ink::Red);
+        return false;
+    }
+    ConsoleColor::Print("The text ledger is sealed: " + fileName + "\n", ConsoleColor::Ink::Green);
+    return true;
+}
+
+bool TaskManager::LoadFromTextFile(const std::string& fileName)
+{
+    std::ifstream file(fileName);
+    if (!file)
+    {
+        ConsoleColor::Print("No text ledger found. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    std::string header, headerLine;
+    int activeCount = 0, completedCount = 0;
+    if (!std::getline(file, headerLine))
+    {
+        ConsoleColor::Print("Invalid text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    std::istringstream headerStream(headerLine);
+    if (!(headerStream >> header >> activeCount >> completedCount) || header != "CRYPT_TEXT_V1" || activeCount < 0 || completedCount < 0 || activeCount > 10000 || completedCount > 10000)
+    {
+        ConsoleColor::Print("Invalid text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    headerStream >> std::ws;
+    if (!headerStream.eof())
+    {
+        ConsoleColor::Print("Invalid text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    std::vector<Task> newActive, newCompleted;
+    std::set<int> ids;
+    int highestId = 0;
+    for (int i = 0; i < activeCount+completedCount; i++)
+    {
+        std::string line, title, category;
+        int id = 0, priority = 0, completed = -1;
+        if (!std::getline(file, line))
+        {
+            ConsoleColor::Print("Incomplete text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+            return false;
+        }
+        std::istringstream row(line);
+        if (!(row >> id >> priority >> completed >> std::quoted(title)
+            >> std::quoted(category)) || id < 1 || id > 1000000 ||
+            priority < 1 || priority > 3 || (completed != 0 && completed != 1) ||
+            title.find_first_not_of(" \t") == std::string::npos ||
+            category.find_first_not_of(" \t") == std::string::npos ||
+            title.size() > 1000 || category.size() > 1000 ||
+            !ids.insert(id).second || completed != (i >= activeCount ? 1 : 0))
+        {
+            ConsoleColor::Print("Invalid task in text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+            return false;
+        }
+        row >> std::ws;
+        if (!row.eof())
+        {
+            ConsoleColor::Print("Extra data in text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+            return false;
+        }
+        Task task(id, title, static_cast<Priority>(priority), category, completed == 1);
+        if (completed) newCompleted.push_back(task);
+        else newActive.push_back(task);
+        highestId = std::max(highestId, id);
+        file >> std::ws;
+        if(!file.eof())
+        {
+            ConsoleColor::Print("Extra records in text ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+            return false;
+        }
+        activeTasks = std::move(newActive);
+        completedTasks = std::move(newCompleted);
+        nextId = highestId + 1;
+        ConsoleColor::Print("The text ledger has been restored.\n", ConsoleColor::Ink::Green);
+        return true;
+    }
 }

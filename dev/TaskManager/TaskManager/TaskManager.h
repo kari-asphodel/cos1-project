@@ -26,5 +26,8 @@ public:
 
 	int GetActiveTaskCount() const;
 	bool HasActiveTasks() const;
+
+	bool SaveToTextFile(const std::string& fileName)const;
+	bool LoadFromTextFile(const std::string& fileName);
 };
 
