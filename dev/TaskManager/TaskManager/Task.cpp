@@ -1,18 +1,17 @@
 #include "Task.h"
+#include <utility>
 
-Task::Task(std::string taskTitle, Priority taskPriority, std::string taskCategory)
-{
-	title = taskTitle;
-	completed = false;
-	priority = taskPriority;
-	category = taskCategory;
-}
+Task::Task(int taskId, std::string taskTitle, Priority taskPriority, std::string taskCategory, bool isCompleted) : id(taskId), title(std::move(taskTitle)), priority(taskPriorty), category(std::move(taskCategory)), completed(isCompleted){ }
 
 std::string Task::GetTitle() const
 {
 	return title;
 }
 
+int Task::GetId() const
+{
+	return id;
+}
 bool Task::IsCompleted() const
 {
 	return completed;
