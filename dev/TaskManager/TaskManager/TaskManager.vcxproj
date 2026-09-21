@@ -207,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="TaskManager.h" />
   </ItemGroup>
