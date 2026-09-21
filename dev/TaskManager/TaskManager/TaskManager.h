@@ -7,21 +7,24 @@ class TaskManager
 private:
 	std::vector<Task> activeTasks;
 	std::vector<Task> completedTasks;
+	int nextId = 1;
 
-	void DisplayTaskList(const std::vector<Task>& taskList, std::string heading) const;
+	void DisplayTaskList(const std::vector<Task>& taskList, std::string& heading) const;
 public:
-	void AddTask(std::string title, Priority priority, std::string category);
+	void AddTask(const std::string& title, Priority priority, const std::string& category);
 
 	void ViewActiveTasks() const;
 	void ViewCompletedTasks() const;
 	void ViewTasksByPriority(Priority priority) const;
+	void ViewTasksByCategory(const std::string& category) const;
 
-	void CompleteTask(int index);
+	void CompleteTask(int id);
 	void SortActiveTasksByPriority();
 
 
 	void DisplaySummary() const;
 
 	int GetActiveTaskCount() const;
+	bool HasActiveTasks() const;
 };
 

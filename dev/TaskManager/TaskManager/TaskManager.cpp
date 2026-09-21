@@ -1,12 +1,24 @@
 #include "TaskManager.h"
+#include "ConsoleColor.h"
 #include <iostream>
 #include <algorithm>
-
-void TaskManager::AddTask(std::string title, Priority priority, std::string category)
+#include <cctype>
+namespace
 {
-	activeTasks.push_back(Task(title, priority, category));
+	std::string Lower(std::strig text)
+	{
+		for (char& ch : text)
+		
+			ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
 
-	std::cout << "\nTask added to the crypt successfully.\n";
+		return text;
+	}
+}
+
+void TaskManager::AddTask(const std::string& title, Priority priority, const std::string& category)
+{
+	activeTasks.emplace_back(nextId++, title, priority, category);
+	ConsoleColor::Print("\nTask added to the crypt successfully.\n", ConsoleColor::Ink::Green);
 }
 
 void TaskManager::ViewActiveTasks() const
@@ -21,17 +33,17 @@ void TaskManager::ViewCompletedTasks() const
 
 void TaskManager::CompleteTask(int index)
 {
-	if (index >= 0 && index < activeTasks.size())
+	auto found = std::find_if(activeTasks.begin(), activeTasks.end(),
+		[id](const Task& task) { return task.GetId() == id; });
+	if (found == activeTasks.end())
 	{
-		activeTasks[index].CompleteTask();
-		completedTasks.push_back(activeTasks[index]);
-		activeTasks.erase(activeTasks.begin() + index);
-		std::cout << "\nTask completed and moved to the completed crypt.\n";
+		ConsoleColor::Print("No active task has that ID.\n", ConsoleColor::Ink::Red);
+		return;
 	}
-	else
-	{
-		std::cout << "\nInvalid task number. That task does not exist in this realm.\n";
-	}
+	found->CompleteTask();
+	completedTasks.push_back(*found);
+	activeTasks.erase(found);
+	ConsoleColor::Print("Task completed and moved to the completed crypt.\n", ConsoleColor::Ink::Green);
 }
 
 int TaskManager::GetActiveTaskCount() const
@@ -41,37 +53,34 @@ int TaskManager::GetActiveTaskCount() const
 
 void TaskManager::DisplaySummary() const
 {
-	std::cout << "\n==== CRYPT SUMMARY ====\n";
+	ConsoleColor::Print("\n==== CRYPT SUMMARY ====\n", ConsoleColor::Ink::Purple);
 	std::cout << "Active Tasks: " << activeTasks.size() << "\n";
 	std::cout << "Completed Tasks: " << completedTasks.size() << "\n";
 	std::cout << "Total Tasks Created: " << activeTasks.size()+completedTasks.size() << "\n";
 }
 
-void TaskManager::DisplayTaskList(const std::vector<Task>& taskList, std::string heading)const
+void TaskManager::DisplayTaskList(const std::vector<Task>& taskList, std::string& heading)const
 {
-	std::cout << "\n==== " << heading << " ====\n";
+	ConsoleColor::Print("\n==== " + heading + " ====\n", ConsoleColor::Ink::Purple);
 
 	if (taskList.empty())
 	{
-		std::cout << "\nNo tasks found. The crypt is empty.\n";
+		ConsoleColor::Print("\nNo tasks found. The crypt is quiet.\n", ConsoleColor::Ink::Yellow);
 		return;
 	}
 
-	for (int i = 0; i < taskList.size(); i++)
+	for (const Task& task : taskList)
 	{
-		std::cout << i + 1 << ". "
-			<< taskList[i].GetTitle()
-			<< " | Priority: "
-			<< taskList[i].GetPriorityText()
-			<<" | Category: "
-			<< taskList[i].GetCategory()
-			<< "\n";
+		std::cout << "ID " << task.GetId() << ". " << task.GetTitle()
+			<< " | Priority: " << task.GetPriorityText()
+			<< " | Category: " << task.GetCategory() << "\n";
+
 	}
 }
 
 void TaskManager::SortActiveTasksByPriority()
 {
-	std::sort(
+	std::stable_sort(
 		activeTasks.begin(),
 		activeTasks.end(),
 		[](const Task& first, const Task& second)
@@ -80,20 +89,18 @@ void TaskManager::SortActiveTasksByPriority()
 				static_cast<int>(second.GetPriority());
 		}
 	);
-	std::cout << "\nActive tasks sorted by priority. The loudest demons rise first.\n";
+	ConsoleColor::Print("The loudest demons rise first.\n", ConsoleColor::Ink::Yellow);
 }
 
 void TaskManager::ViewTasksByPriority(Priority priority) const
 {
 	std::vector<Task> filterTasks;
-	for (int i = 0; i < activeTasks.size(); i++)
+	for (const Task& task : activeTasks)
 	{
-		if (activeTasks[i].GetPriority() == priority) {
-			filterTasks.push_back(activeTasks[i]);
-		}
+		if (task.GetPriority() == priority) filterTasks.push_back(task);
 	}
 
-	std::string heading;
+	const std::string heading;
 	if (priority == Priority::High)
 	{
 		heading = "HIGH PRIORITY TASKS";
@@ -108,3 +115,13 @@ void TaskManager::ViewTasksByPriority(Priority priority) const
 	}
 	DisplayTaskList(filterTasks, heading);
 }
+
+void TaskManager::ViewTasksByCategory(const std::string& category) const
+{
+	std::vector<Task> matches;
+	for (const Task& task : activeTasks)
+		if (Lower(task.GetCategory()) == Lower(category)) matches.push_back(task);
+	DisplayTaskList(matches, "CATEGORY: " + category);
+}
+
+bool TaskManager::HasActiveTasks() const { return !activeTasks.empty(); }
