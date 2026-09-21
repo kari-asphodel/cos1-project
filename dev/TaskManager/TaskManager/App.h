@@ -1,13 +1,16 @@
 #pragma once
 #include "TaskManager.h"
+#include <string>
 class App
 {
 private:
 	TaskManager manager;
-	bool isRunning;
-
+	bool isRunning = true;
+	void ClearScreen() const;
+	void WaitForEnter() const;
 	void DisplayMenu() const;
-	int GetValidatedInputInRange(int min, int max);
+	int GetValidatedInputInRange(int min, int max) const;
+	std::String GetRequiredText(const std::string& prompt) const;
 	void HandleChoice(int choice);
 	Priority GetPriorityFromUser();
 
