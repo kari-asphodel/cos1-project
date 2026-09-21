@@ -47,7 +47,7 @@ void App::DisplayMenu() const
     std::cout << "1. Add Task\n2. View Active Tasks\n3. Complete Task by ID\n"
         << "4. View Completed Tasks\n5. View Progress Summary\n"
         << "6. Sort Active Tasks by Priority\n7. Filter by Priority\n"
-        << "8. Filter by Category\n9. Quit\nChoose 1-9: ";
+        << "8. Filter by Category\n9. Save Text Ledger\n10.Load Text Ledger\n11.Quit\nChoose 1-11: ";
 }
 
 int App::GetValidatedInputInRange(int min, int max) const
@@ -145,6 +145,12 @@ void App::HandleChoice(int choice)
         break;
     }
     case 9:
+        manager.SaveToTextFile("tasks.txt");
+        break;
+    case 10:
+        manager.LoadFromTextFile("tasks.txt");
+        break;
+    case 11:
         isRunning = false;
         break;
     default:
@@ -159,7 +165,7 @@ void App::Run()
     {
         ClearScreen();
         DisplayMenu();
-        const int choice = GetValidatedInputInRange(1, 9);
+        const int choice = GetValidatedInputInRange(1, 11);
         if (!std::cin) break;
         ClearScreen();
         ConsoleColor::Print("=== CRYPT KEEPER / OPTION " + std::to_string(choice) + " ===\n", ConsoleColor::Ink::Purple);

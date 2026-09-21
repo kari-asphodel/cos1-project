@@ -1,0 +1,4 @@
+CRYPT_TEXT_V1 2 1
+2 3 0 "Seal the forbidden archive" "Wards"
+3 1 0 "Clean the cobwebs" "Crypt care"
+1 2 1 "Feed the raven familiar" "Familiar care"
