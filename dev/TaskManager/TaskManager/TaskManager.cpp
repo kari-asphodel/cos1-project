@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <sstream>
 #include <set>
+#include <cstring>
+#include <cstdint>
 
 
 namespace
@@ -16,6 +18,31 @@ namespace
         for (char& ch : text)
             ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
         return text;
+    }
+    bool WriteNumber(std::ofstream& file, std::uint32_t value)
+    {
+        file.write(reinterpret_cast<const char*>(&value), sizeof(value));
+        return static_cast<bool>(file);
+    }
+    bool ReadNumber(std::ifstream& file, std::uint32_t& value)
+    {
+        file.read(reinterpret_cast<char*>(&value), sizeof(value));
+        return static_cast<bool>(file);
+    }
+    bool WriteString(std::ofstream& file, const std::string& text)
+    {
+        if (text.size() > 1000 || !WriteNumber(file, static_cast<std::uint32_t>(text.size())))
+            return false;
+        file.write(text.data(), static_cast<std::streamsize>(text.size()));
+        return static_cast<bool>(file);
+    }
+    bool ReadString(std::ifstream& file, std::string& text)
+    {
+        std::uint32_t length = 0;
+        if (!ReadNumber(file, length) || length > 1000) return false;
+        text.resize(length);
+        file.read(text.data(), static_cast<std::streamsize>(length));
+        return static_cast<bool>(file);
     }
 }
 
@@ -216,5 +243,91 @@ bool TaskManager::LoadFromTextFile(const std::string& fileName)
     completedTasks = std::move(newCompleted);
     nextId = highestId + 1;
     ConsoleColor::Print("The text ledger has been restored.\n", ConsoleColor::Ink::Green);
+    return true;
+}
+
+bool TaskManager::SaveToBinaryFile(const std::string& fileName) const
+{
+    std::ofstream file(fileName, std::ios::biinary | std::ios::trunc);
+    if (!file)
+    {
+        ConsoleColor::Print("Could not open the binary ledger for saving.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    file.write("CKB1", 4);
+    const bool validCounts = activeTasks.size() <= 10000 && completedTasks.size() <= 10000;
+    bool ok = validCounts &&
+        WriteNumber(file, static_cast<std::uint32_t>(activeTasks.size())) &&
+        WriteNumber(file, static_cast<std::uint32_t>(completedTasks.size()));
+
+    auto writeTask = [&file](const Task& task)
+        {
+            return WriteNumber(file, static_cast<std::uint32_t>(task.GetId())) && 
+                   WriteNumber(file, static_cast<std::uint32_t>(task.GetPriority())) &&
+                   WriteString(file, task.GetTitle()) && 
+                   WriteString(file, task.GetCategory());
+        };
+    if (ok) for (const Task& task : activeTasks) if (!writeTask(task)) ok = false;
+    if (ok) for (const Task& task : completedTasks) if (!writeTask(task)) ok = false;
+    file.close();
+    if (!ok || !file)
+    {
+        ConsoleColor::Print("Binary save did not finish.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    ConsoleColor::Print("The binary ledger is sealed: " + fileName + "\n", ConsoleColor::Ink::Green);
+    return true;
+}
+
+bool TaskManager::LoadFromBinaryFile(const std::string& fileName)
+{
+    std::ifstream file(fileName, std::ios::binary);
+    if (!file)
+    {
+        ConsoleColor::Print("No binary ledger found. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    char magic[4]{};
+    std::uint32_t activeCount = 0, completedCount = 0;
+    if (!file.read(magic, 4) || std::memcmp(magic, "CKB1", 4) != 0 ||
+        !ReadNumber(file, activeCount) || !ReadNumber(file, completedCount) ||
+        activeCount > 10000 || completedCount > 10000)
+    {
+        ConsoleColor::Print("Invalid binary ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    std::vector<Task> newActive, newCompleted;
+    std::set<int>ids;
+    int highestId - 0;
+    for (std::uint32_t i = 0; i < activeCount + completedCount; ++i)
+    {
+        std::uint32_t id = 0, priority = 0;
+        std::string title, category;
+        if (!ReadNumber(file, id) || !ReadNumber(file, priority) ||
+            !ReadString(file, title) || !ReadString(file, category) ||
+            id < 1 || id > 1000000 || priority < 1 || priority > 3 ||
+            title.find_first_not_of(" \t") == std::string::npos ||
+            category.find_first_not_of(" \t") == std::string::npos ||
+            !ids.insert(static_cast<int>(id)).second)
+        {
+            ConsoleColor::Print("Damaged binary ledger. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+            return false;
+        }
+
+        const bool complete = i >= activeCount;
+        Task task(static_cast<int>(id), title, static_cast<Priority>(priority), category, complete);
+        if (complete) newCompleted.push_back(task);
+        else newActive.push_back(task);
+        highestId = std::max(highestId, static_cast<int>(id));
+    }
+    if (file.peek() != std::char_traits<char>::eof())
+    {
+        ConsoleColor::Print("Extra binary record. Current tasks are safe.\n", ConsoleColor::Ink::Red);
+        return false;
+    }
+    activeTasks = std::move(newActive);
+    completedTasks = std::move(newCompleted);
+    nextId = highestId + 1;
+    ConsoleColor::Print("The binary ledgerr has been restored.\n", ConsoleColor::Ink::Green);
     return true;
 }

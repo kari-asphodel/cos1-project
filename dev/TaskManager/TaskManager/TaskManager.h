@@ -29,5 +29,9 @@ public:
 
 	bool SaveToTextFile(const std::string& fileName)const;
 	bool LoadFromTextFile(const std::string& fileName);
+
+	bool SaveToBinaryFile(const std::string& fileName) const;
+	bool LoadFromBinaryFile(const std::string& fileName);
+
 };
 
