@@ -13,7 +13,7 @@ void Output9()
     }
 }
 
-//A Alive
+//A Alive - THIS ONE 
 //B Defeated
 //C 100
 //D Compile Error

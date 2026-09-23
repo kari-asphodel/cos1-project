@@ -51,6 +51,6 @@ void Output11()
 
 
 //A 6
-//B 8
+//B 8 - THIS ONE 
 //C 14
 //D 20
