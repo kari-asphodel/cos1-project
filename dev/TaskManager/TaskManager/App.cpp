@@ -47,7 +47,7 @@ void App::DisplayMenu() const
     std::cout << "1. Add Task\n2. View Active Tasks\n3. Complete Task by ID\n"
         << "4. View Completed Tasks\n5. View Progress Summary\n"
         << "6. Sort Active Tasks by Priority\n7. Filter by Priority\n"
-        << "8. Filter by Category\n9. Save Text Ledger\n10.Load Text Ledger\n11. Save Binary Ledger\n12.Load Binary Ledger\n13.Quit\nChoose 1-13: ";
+        << "8. Filter by Category\n9. Save Text Ledger\n10.Load Text Ledger\n11.Save Binary Ledger\n12.Load Binary Ledger\n13.Quit\nChoose 1-13: ";
 }
 
 int App::GetValidatedInputInRange(int min, int max) const

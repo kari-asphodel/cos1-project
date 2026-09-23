@@ -248,7 +248,7 @@ bool TaskManager::LoadFromTextFile(const std::string& fileName)
 
 bool TaskManager::SaveToBinaryFile(const std::string& fileName) const
 {
-    std::ofstream file(fileName, std::ios::biinary | std::ios::trunc);
+    std::ofstream file(fileName, std::ios::binary | std::ios::trunc);
     if (!file)
     {
         ConsoleColor::Print("Could not open the binary ledger for saving.\n", ConsoleColor::Ink::Red);
@@ -298,7 +298,7 @@ bool TaskManager::LoadFromBinaryFile(const std::string& fileName)
     }
     std::vector<Task> newActive, newCompleted;
     std::set<int>ids;
-    int highestId - 0;
+    int highestId = 0;
     for (std::uint32_t i = 0; i < activeCount + completedCount; ++i)
     {
         std::uint32_t id = 0, priority = 0;
