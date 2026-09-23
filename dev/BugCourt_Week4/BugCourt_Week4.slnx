@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="BugCourt_Week4/BugCourt_Week4.vcxproj" Id="9ba1a561-63d1-4e43-8fe6-6f4ade8e6730" />
+</Solution>
