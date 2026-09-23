@@ -1,0 +1,5 @@
+CRYPT_TEXT_V1 4 0
+2 3 0 "Feed the gremlins" "Familiar care"
+4 3 0 "2" "gasdfawer"
+3 2 0 "Add the house spiders to their corners" "Crypt care"
+1 1 0 "Clean the cobwebst" "Rituals"

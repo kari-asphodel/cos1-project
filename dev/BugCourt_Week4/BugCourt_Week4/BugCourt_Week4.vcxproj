@@ -29,8 +29,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d2e22a47-2e7b-462e-8515-00ea4912fe40}</ProjectGuid>
-    <RootNamespace>TaskManager</RootNamespace>
+    <ProjectGuid>{9ba1a561-63d1-4e43-8fe6-6f4ade8e6730}</ProjectGuid>
+    <RootNamespace>BugCourtWeek4</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -200,16 +200,18 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Task.cpp" />
-    <ClCompile Include="TaskManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="App.h" />
-    <ClInclude Include="ConsoleColor.h" />
-    <ClInclude Include="Task.h" />
-    <ClInclude Include="TaskManager.h" />
+    <ClCompile Include="Bug1.cpp" />
+    <ClCompile Include="Bug10.cpp" />
+    <ClCompile Include="Bug11.cpp" />
+    <ClCompile Include="Bug12.cpp" />
+    <ClCompile Include="Bug2.cpp" />
+    <ClCompile Include="Bug3.cpp" />
+    <ClCompile Include="Bug4.cpp" />
+    <ClCompile Include="Bug5.cpp" />
+    <ClCompile Include="Bug6.cpp" />
+    <ClCompile Include="Bug7.cpp" />
+    <ClCompile Include="Bug8.cpp" />
+    <ClCompile Include="Bug9.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
