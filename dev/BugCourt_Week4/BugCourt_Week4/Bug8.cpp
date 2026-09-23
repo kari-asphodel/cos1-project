@@ -1,6 +1,6 @@
 #include <iostream>
 
-void LevelUp(Player player)
+void LevelUp(Player& player)
 {
     player.SetLevel(player.GetLevel() + 1);
 }

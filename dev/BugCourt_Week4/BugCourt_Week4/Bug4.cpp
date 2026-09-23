@@ -8,7 +8,7 @@ public:
 
     void TakeDamage(int damage)
     {
-        int health = health - damage;
+        health -= damage; 
     }
 
     int GetHealth()

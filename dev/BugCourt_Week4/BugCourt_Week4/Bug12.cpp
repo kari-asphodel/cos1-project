@@ -12,3 +12,4 @@ private:
     std::string name;
     int damage;
 };
+

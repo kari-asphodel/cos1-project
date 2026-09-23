@@ -10,7 +10,7 @@ void Bug2()
         "Vampire"
     };
 
-    for (int i = 0; i <= monsters.size(); i++)
+    for (int i = 0; i < monsters.size(); i++)
     {
         std::cout << monsters[i] << '\n';
     }

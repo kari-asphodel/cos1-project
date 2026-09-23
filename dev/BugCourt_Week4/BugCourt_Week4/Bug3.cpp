@@ -1,7 +1,7 @@
 class Player
 {
 public:
-    void Player()
+    Player()
     {
         health = 100;
     }

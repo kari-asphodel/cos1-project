@@ -4,4 +4,10 @@ bool IsAlive(int health)
     {
         return true;      
     }
+    return false;
 }
+
+//bool IsAlive(int health)
+//{
+//    return health > 0;
+//}

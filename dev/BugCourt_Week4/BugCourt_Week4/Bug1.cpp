@@ -26,7 +26,7 @@ int main()
         }
         else if (choice == 4)
         {
-            choice = 0;
+            std::cout << "Goodbye.\n";
         }
     }
 }

@@ -9,7 +9,7 @@ void SavePlayer(std::string name, int level)
 
 void SaveScore(int score)
 {
-    std::ofstream file("player.txt");
+    std::ofstream file("player.txt", std::ios::app);
 
     file << score << '\n';
 }
